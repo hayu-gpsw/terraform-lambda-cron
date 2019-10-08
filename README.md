@@ -3,7 +3,6 @@
 This is a minimal Hello World example of deploying an AWS Lambda function invoked by a scheduled CloudWatch cron event. The function is written in Go and deployment is automated with Terraform.
 
 TODO:
-- use terraform to create cloudwatch rule for the scheduled cron event
 - add the cloudwatch rule as a trigger for the lambda function
 
 - [Prerequisites](#prerequisites)

@@ -25,7 +25,7 @@ resource "aws_lambda_function" "hello" {
 # [1]: https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_elements_version.html
 resource "aws_iam_role" "hello" {
   name               = "hello"
-  assume_role_policy = <<POLICY
+  assume_role_policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -38,7 +38,7 @@ resource "aws_iam_role" "hello" {
     }
   ]
 }
-POLICY
+EOF
 }
 
 # Attach the AWS managed AWSLambdaBasicExecutionRole policy
@@ -46,4 +46,17 @@ resource "aws_iam_policy_attachment" "AWSLambdaBasicExecutionRole" {
   name = "AWSLambdaBasicExecutionRole"
   roles = ["${aws_iam_role.hello.id}"]
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+# Create a CloudWatch event to trigger the lambda function every minute
+resource "aws_cloudwatch_event_rule" "hello_cron" {
+  name                = "hello_cron"
+  description         = "Cron-based event trigger every minute"
+  schedule_expression = "cron(0/1 * * * ? *)"
+}
+
+resource "aws_cloudwatch_event_target" "hello_cron_target" {
+  target_id = "hello_cron"
+  arn       = "${aws_lambda_function.hello.arn}"
+  rule      = "${aws_cloudwatch_event_rule.hello_cron.name}"
 }
