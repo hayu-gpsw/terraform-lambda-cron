@@ -48,15 +48,25 @@ resource "aws_iam_policy_attachment" "AWSLambdaBasicExecutionRole" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
 
-# Create a CloudWatch event to trigger the lambda function every minute
+# Create a CloudWatch event firing every minute
 resource "aws_cloudwatch_event_rule" "hello_cron" {
   name                = "hello_cron"
   description         = "Cron-based event trigger every minute"
   schedule_expression = "cron(0/1 * * * ? *)"
 }
 
+# Map the lambda function as a target of the cloudwatch event
 resource "aws_cloudwatch_event_target" "hello_cron_target" {
   target_id = "hello_cron"
   arn       = "${aws_lambda_function.hello.arn}"
   rule      = "${aws_cloudwatch_event_rule.hello_cron.name}"
+}
+
+# Add cloudwatch cron event as a trigger for the lambda
+resource "aws_lambda_permission" "hello_cron_invoke_lambda" {
+    statement_id = "AllowExecutionFromCloudWatch"
+    action = "lambda:InvokeFunction"
+    function_name = "${aws_lambda_function.hello.function_name}"
+    principal = "events.amazonaws.com"
+    source_arn = "${aws_cloudwatch_event_rule.hello_cron.arn}"
 }
