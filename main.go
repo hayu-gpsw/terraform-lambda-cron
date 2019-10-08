@@ -12,7 +12,7 @@ import (
 func handleEvent(_ context.Context, e events.CloudWatchEvent) {
 	//value, _ := json.MarshalIndent(e, "", "  ")
 	//log.Printf("Handling CloudWatchEvent: %s", string(value))
-	log.Print("Hello World! The time is %s.", e.Time)
+	log.Printf("Hello World! The time is %s.", e.Time)
 }
 
 func main() {
