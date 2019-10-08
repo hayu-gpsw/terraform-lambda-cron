@@ -1,6 +1,9 @@
 # Terraform + Golang AWS Lambda + Scheduled Cloudwatch Event Cron Trigger
 
-This is a minimal Hello World example of deploying an AWS Lambda function invoked by a scheduled CloudWatch cron event. The function is written in Go and deployment is automated with Terraform.
+This is a minimal Hello World example of deploying an AWS Lambda function and invoke it using a CloudWatch cron 
+expression event. The function is written in Go and deployment is automated with Terraform.
+
+This example evolved from https://github.com/snsinfu/terraform-lambda-example.
 
 - [Prerequisites](#prerequisites)
 - [Usage](#usage)

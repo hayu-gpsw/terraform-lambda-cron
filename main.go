@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"encoding/json"
+	//"encoding/json"
 	"log"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -10,8 +10,9 @@ import (
 )
 
 func handleEvent(_ context.Context, e events.CloudWatchEvent) {
-	value, _ := json.MarshalIndent(e, "", "  ")
-	log.Printf("Handling CloudWatchEvent: %s", string(value))
+	//value, _ := json.MarshalIndent(e, "", "  ")
+	//log.Printf("Handling CloudWatchEvent: %s", string(value))
+	log.Print("Hello World! The time is %s.", e.Time)
 }
 
 func main() {
