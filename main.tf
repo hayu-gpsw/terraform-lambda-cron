@@ -1,5 +1,8 @@
 # This is required to get the AWS region via ${data.aws_region.current}.
-data "aws_region" "current" {
+#data "aws_region" "current" {
+#}
+provider "aws" {
+  region = "us-east-1"
 }
 
 # Define a Lambda function.
